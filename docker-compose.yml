@@ -1,0 +1,36 @@
+version: '3.4'
+
+services:
+  marvel-web:
+    image: ${DOCKER_REGISTRY-}marvelweb
+    environment:
+      - MarvelApiUrl=http://marvel-api
+    build:
+      context: .
+      dockerfile: marvel-web/Dockerfile
+    depends_on:
+      - marvel-api
+    networks:
+      - app-net
+
+  marvel-api:
+    image: ${DOCKER_REGISTRY-}marvelapi
+    environment:
+      - Database__Provider=SqlServer
+    build:
+      context: .
+      dockerfile: marvel-api/Dockerfile
+    networks:
+      - app-net
+    secrets:
+      - source: sqlserver-connection
+        target: /app/config/secrets.json
+
+networks:
+  app-net:
+    external: 
+      name: nat
+
+secrets:
+  sqlserver-connection:
+    file: ./config/secrets.json

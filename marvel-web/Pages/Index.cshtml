@@ -1,0 +1,26 @@
+﻿@page
+@model IndexModel
+
+<div class="text-center">
+    <h1 class="display-4">Random Marvel Characters</h1>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var character in @Model.Characters)
+        {
+            <tr>
+                <td>@character.FirstName</td>
+                <td>@character.LastName</td>
+                <td>@character.Status</td>
+            </tr>
+        }
+    </tbody>
+</table>
